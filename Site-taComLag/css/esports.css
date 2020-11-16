@@ -14,6 +14,10 @@ ul {
     padding: 0!important;
 }
 
+.banner {
+    max-width: 980px;
+}
+
 .menu-top {
     width: 100%;
     background-color: #252323;
@@ -102,10 +106,9 @@ ul {
 }
 
 .slider {
-    width: 100%;
     margin: auto;
+    max-width: 980px;
 }
-
 button.slick-prev {
     left: 150px;
     z-index: 1;

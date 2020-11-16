@@ -193,7 +193,8 @@ button.slick-next {
 .dest-noti {
     align-content: center;
     display: block;
-    margin-left: 15%;
+    max-width: 980px;
+    margin: 0 auto;
 }
 
 .dest-lanc {

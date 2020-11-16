@@ -208,8 +208,7 @@ button.slick-next {
 
 .dest-noti {
     align-content: center;
-    display: inline-block;
+    display: block;
     max-width: 980px;
-    background: blue;
     margin: 0 auto;
 }
