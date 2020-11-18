@@ -1,7 +1,7 @@
 $(".main-slider").slick({
     dots: true,
     dotsClass: 'slick-dots',
-    lazyLoad: 'ondemand', // on demand progressive anticipated
+    lazyLoad: 'ondemand',
     infinite: true,
     autoplay: true,
     autoplaySpeed: 3000,
@@ -15,11 +15,3 @@ $(".main-slider").slick({
     slidesToShow: 2,
     slidesToScroll: 3
   });
-
-//   slider vertical
-//   $(".vertical-center").slick({
-//     dots: true,
-//     vertical: true,
-//     centerMode: true,
-    
-//   });
