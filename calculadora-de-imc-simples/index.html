@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="author" content="Lucas Sachini Canno   ">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Calculadora de IMC</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <style>
+        
+    body {
+        background-color:#00ffff;
+    }
+
+    .center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        
+    }
+
+    #calculadora {
+        background-color: #B1B1B1;
+        width: 350px;
+        height: 100%;
+        padding: 6px;
+        border-radius: 5px;
+    }
+
+    header {
+        height: 150%;
+        font-size: 30px;
+        font-weight: bold;
+        position: relative;
+        text-align: center;
+    }
+
+    #texto {
+        text-align: center;
+    }
+
+    #resultado {
+        font-family: 'Arial Black';
+        font-size: 30px;
+    }
+
+    #significado {
+        font-family: 'Arial';
+        font-size: 23px;
+        text-align: justify;
+    }
+
+    </style>
+</head>
+<body>
+    
+    <div class="center">
+        <div id="calculadora">
+            <header>
+                <div id="tittle">
+                    Calculadora de IMC
+                </div>
+            </header>
+            <section class="container">
+                <!-- adicionar um id nos botões para conseguir mexer no javascript -->
+               <div>
+                    <input type="text" placeholder="Peso em Kg" id="peso"><br>
+                    <input type="text" placeholder="Altura em centimetros" id="altura"><br>
+                    <input type="submit" value="Calcular seu IMC" id="calc"><br>
+               </div>
+               <div>
+                   <text id="resultado"></text>
+               </div>
+               <div>
+                   <text id="significado"></text>
+               </div>
+            </section>
+        </div>
+    </div>
+    <script src="scripts/controller/calcControl.js"></script>
+    <script src="scripts/calculadora.js"></script>
+</body>
+</html>
