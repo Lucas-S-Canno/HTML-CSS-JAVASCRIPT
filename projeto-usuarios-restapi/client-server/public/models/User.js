@@ -1,4 +1,3 @@
-/*jshint esversion: 6 */
 class User {
   constructor(name, gender, birth, country, email, password, photo, admin) {
     this._name = name;
@@ -10,7 +9,7 @@ class User {
     this._photo = photo;
     this._admin = admin;
     this._register = new Date();
-    this._id;
+    // this._id;
   }
 
   get id() {

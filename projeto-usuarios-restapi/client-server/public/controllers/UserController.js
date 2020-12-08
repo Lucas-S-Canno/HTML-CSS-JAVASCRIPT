@@ -1,4 +1,3 @@
-/*jshint esversion: 6 */
 class UserController {
   constructor(formIdCreate, formIdUpdate, tableId) {
     this.formEl = document.getElementById(formIdCreate);
@@ -51,7 +50,7 @@ class UserController {
 
   onSubmit() {
     this.formEl.addEventListener("submit", (event) => {
-      //criar evento com o botão submit
+
       event.preventDefault();
       let btn = this.formEl.querySelector("[type=submit]");
       btn.disabled = true;
@@ -59,7 +58,7 @@ class UserController {
       if (!values) return false;
       this.getPhoto(this.formEl).then(
         (content) => {
-          //uso de arrow function para manter o "this" com o mesmo valor
+
           values.photo = content;
           values.save();
           this.addLine(values);
@@ -111,16 +110,16 @@ class UserController {
         field.parentElement.classList.add("has-error");
         isValid = false;
       }
-      // if para pegar somente o campo de genero marcado "fields.forEach(function (field, index) {"
+
       if (field.name == "gender") {
         if (field.checked) {
-          //poderia ser (field.checked === true, pois verifica se é verdadeira a condição)
+
           user[field.name] = field.value;
         }
       } else if (field.name == "admin") {
         user[field.name] = field.checked;
       } else {
-        //caso não seja o campo de genero, ele volta o valor dele
+
         user[field.name] = field.value;
       }
       btn.disabled = false;
@@ -148,44 +147,35 @@ class UserController {
   }
 
   selectAll() {
-    let users = User.getUsersStorage();
-    users.forEach((dataUser) => {
-      let user = new User();
-      user.loadFromJSON(dataUser);
-      this.addLine(user);
-    });
+    let ajax = new XMLHttpRequest();
+    ajax.open('GET', '/users');
+    ajax.onload = event => {
+      let obj = {
+        users: []
+      };
+      try {
+        obj.users = JSON.parse(ajax.responseText);
+      } catch (e) {
+        console.error(e);
+      }
+      obj.users.forEach(dataUser => {
+        let user = new User();
+        user.loadFromJSON(dataUser);
+        this.addLine(user);
+      });
+    };
+    ajax.send();
   }
 
-  // insert(data){ //metodo não usado mais, pois foi acrescentado o o metodo save no models\User.js
-  //   let users = this.getUsersStorage();
-  //   users.push(data);
-  //   // sessionStorage.setItem("users", JSON.stringify(users)); //para session storage é só alterar todos os localStorage para sessionStorage e ja troca o local de armazenamento
-  //   localStorage.setItem("users", JSON.stringify(users));
-  // }
+
 
   addLine(dataUser) {
-    // var tr = document.createElement("tr");
-    //a sintaxe do innerHTML está correta, porem o não está atualizada no package do atom, pode ser que a proxima vez não apareça o erro
+
 
     let tr = this.getTr(dataUser);
 
-    //<td>${(dataUser.admin) ? 'Sim' : 'não'}</td> --------> if ternario, em uma unica linha, ?(se) dataUser.admin for true escreva "Sim" :(se não) escreva "Não"
-
     this.tableEl.appendChild(tr);
-    //tambem funciona
-    // this.tableEl.innerHTML += `<tr>
-    //       <td><img src=${dataUser.photo} alt="User Image" class="img-circle img-sm"></td>
-    //       <td>${dataUser.name}</td>
-    //       <td>${dataUser.email}</td>
-    //       <td>${dataUser.admin}</td>
-    //       <td>${dataUser.birth}</td>
-    //       <td>
-    //         <button type="button" class="btn btn-primary btn-xs btn-flat">Editar</button>
-    //         <button type="button" class="btn btn-danger btn-xs btn-flat">Excluir</button>
-    //       </td>
-    //       </tr>`;
-    // usa a crase (``) permite a inserção do html da maneira em que foi escrita com quebras de linha e o uso de variaveis como nomes escrevendo ${var.valor}
-    // document.getElementById(tableId).appendChild(tr);
+
     this.updateCount(tr);
   }
 
@@ -222,7 +212,7 @@ class UserController {
 
     tr.querySelector(".btn-edit").addEventListener("click", (e) => {
       let json = JSON.parse(tr.dataset.user);
-      // let form = document.querySelector("#form-user-update");
+
       this.formUpdateEl.dataset.trIndex = tr.sectionRowIndex;
       for (let name in json) {
         let field = this.formUpdateEl.querySelector(
@@ -232,7 +222,6 @@ class UserController {
           switch (field.type) {
             case "file":
               continue;
-            // break;
 
             case "radio":
               field = this.formUpdateEl.querySelector(
@@ -268,11 +257,11 @@ class UserController {
   updateCount(tr) {
     let numberUsers = 0;
     let numberAdmin = 0;
-    // console.log(tr.dataset.user);
+
     [...this.tableEl.children].forEach((tr) => {
       numberUsers++;
       let user = JSON.parse(tr.dataset.user);
-      // console.log(user);
+
       if (user._admin) numberAdmin++;
     });
     document.querySelector("#number-users").innerHTML = numberUsers;
