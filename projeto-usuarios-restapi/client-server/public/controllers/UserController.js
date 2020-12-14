@@ -33,13 +33,13 @@ class UserController {
           }
           let user = new User();
           user.loadFromJSON(result);
-          user.save();
-          this.getTr(user, tr);
-          this.updateCount();
-
-          this.formUpdateEl.reset();
-          btn.disabled = false;
-          this.showPanelCreate();
+          user.save().then(user => {
+            this.getTr(user, tr);
+            this.updateCount();
+            this.formUpdateEl.reset();
+            btn.disabled = false;
+            this.showPanelCreate();
+          });
         },
         (e) => {
           console.error(e);
@@ -60,10 +60,11 @@ class UserController {
         (content) => {
 
           values.photo = content;
-          values.save();
-          this.addLine(values);
-          this.formEl.reset();
-          btn.disabled = false;
+          values.save().then(user => {
+            this.addLine(user);
+            this.formEl.reset();
+            btn.disabled = false;
+          });
         },
         (e) => {
           console.error(e);
@@ -147,24 +148,15 @@ class UserController {
   }
 
   selectAll() {
-    let ajax = new XMLHttpRequest();
-    ajax.open('GET', '/users');
-    ajax.onload = event => {
-      let obj = {
-        users: []
-      };
-      try {
-        obj.users = JSON.parse(ajax.responseText);
-      } catch (e) {
-        console.error(e);
-      }
-      obj.users.forEach(dataUser => {
+    User.getUsersStorage().then(data => {
+      data.users.forEach(dataUser => {
         let user = new User();
         user.loadFromJSON(dataUser);
         this.addLine(user);
       });
-    };
-    ajax.send();
+    });
+
+
   }
 
 
@@ -204,9 +196,11 @@ class UserController {
       if (confirm("Deseja realmente excluir o usuário?")) {
         let user = new User();
         user.loadFromJSON(JSON.parse(tr.dataset.user));
-        user.delete();
-        tr.remove();
+        user.delete().then(data => {
+          tr.remove();
         this.updateCount();
+        });
+        
       }
     });
 
