@@ -18,7 +18,7 @@ router.get('/file', (req, res) => {
             error: err
           });
         }else{
-          res.status(200).end(data)
+          res.status(200).end(data);
         }
       });
     }else{
